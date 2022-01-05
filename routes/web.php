@@ -29,12 +29,13 @@ Route::get('/post/{id}', function ($id) {
         1 => [
             'title' => 'Post Title One',
             'content' => 'Test content',
-            'is_new' => true
+            'is_new' => true,
+            'has_comments' => true
         ],
         2 => [
             'title' => 'Post Title Two',
             'content' => 'Test content Two',
-            'is_new' => false
+            'is_new' => false,
         ]
     ];
     abort_if(!isset($posts[$id]), 404);
