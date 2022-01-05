@@ -10,6 +10,10 @@
 <div>An old blog post</div>
 @endif
 
+@unless($post['is_new'])
+<div>Old post. Unless used</div>
+@endunless
+
   <h1>{{ $post['title'] }}</h1>
   <p>{{ $post['content'] }}</p>
 
