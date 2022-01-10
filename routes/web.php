@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,10 @@ $posts = [
 ];
 
 Route::get('/posts', function() use($posts) {
+    // dd(request()->all());
+    // dd((int)request()->input('page', 1));
+    dd((int)request()->query('page', 1));
+
     return view('posts.index', compact('posts'));
     // return view('posts.index', ['posts' => $posts]);
 })->name('posts.index');
@@ -48,8 +53,40 @@ Route::get('/post/{id}', function ($id) use($posts) {
     return view('posts.show', ['post' => $posts[$id]]);
 })->where([
     'id' => '[0-9]+'
-])->name('post.show');
+])->name('posts.show');
 
 Route::get('/recent-posts/{days_ago?}', function ($daysAgo = 20) {
     return 'Posts from ' . $daysAgo . ' days ago';
-})->name('post.recent.index');
+})->name('post.recent.index')->middleware('auth');
+
+Route::prefix('/fun')->name('fun.')->group(function() use($posts) {
+    Route::get('/responses', function() use($posts) {
+        return response($posts, 201)
+            ->header('Content-Type', 'application/json')
+            ->cookie('MY_COOKIE', 'Ant', 3600);
+    })->name('response');
+
+    Route::get('/redirect', function() {
+        return redirect('/contact');
+    })->name('response');
+
+    Route::get('/back', function() {
+        return back();
+    })->name('response');
+
+    Route::get('/named-route', function() {
+        return redirect()->route('posts.show', ['id' => 1]);
+    })->name('response');
+
+    Route::get('/away', function() {
+        return redirect()->away('https://www.google.com/');
+    })->name('away');
+
+    Route::get('/json', function() use($posts) {
+        return response()->json($posts);
+    })->name('json');
+
+    Route::get('/download', function() use($posts) {
+        return response()->download(public_path('test.jpg'), 'railroad.jpg');
+    })->name('download');
+});
