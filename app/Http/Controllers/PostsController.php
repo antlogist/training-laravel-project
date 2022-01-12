@@ -2,23 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
-    private $posts = [
-        1 => [
-            'title' => 'Post Title One',
-            'content' => 'Test content',
-            'is_new' => true,
-            'has_comments' => true
-        ],
-        2 => [
-            'title' => 'Post Title Two',
-            'content' => 'Test content Two',
-            'is_new' => false,
-        ]
-    ];
     /**
      * Display a listing of the resource.
      *
@@ -26,7 +14,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('posts.index', ['posts' => $this->posts]);
+        return view('posts.index',
+                    ['posts' => BlogPost::all()]);
     }
 
     /**
@@ -58,8 +47,8 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        abort_if(!isset($this->posts[$id]), 404);
-        return view('posts.show', ['post' => $this->posts[$id]]);
+        // abort_if(!isset($this->posts[$id]), 404);
+        return view('posts.show', ['post' => BlogPost::findOrFail($id)]);
     }
 
     /**
