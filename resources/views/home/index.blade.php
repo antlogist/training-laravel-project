@@ -4,6 +4,7 @@
 
 @section('content')
 
-  <h1>Home test page</h1>
+  <h1>Welcome to Laravel!</h1>
+  <p>This is the content of the main page!</p>
 
 @endsection
