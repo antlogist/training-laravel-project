@@ -36,4 +36,18 @@ class PostTest extends TestCase
             'title' => 'New title'
         ]);
     }
+
+    public function testStoreValid() {
+        $params = [
+            'title' => 'Valid ttile',
+            'content' => 'At least 19 characters'
+        ];
+
+        $this->post('/posts', $params)
+            ->assertStatus(302)
+            ->assertSessionHas('status');
+
+        $this->assertEquals(session('status'),'The blog post was created');
+    }
+
 }
