@@ -88,6 +88,20 @@ class PostTest extends TestCase
         ]);
     }
 
+    public function testDelete() {
+        $post = $this->createDummyBlogPost();
+
+        $this->assertDatabaseHas('blog_posts', $post->toArray());
+
+        $this->delete("/posts/{$post->id}")
+        ->assertStatus(302)
+        ->assertSessionHas('status');
+
+        $this->assertEquals(session('status'),'Blog-post was deleted!');
+
+        $this->assertDatabaseMissing('blog_posts', $post->toArray());
+    }
+
     private function createDummyBlogPost(): BlogPost {
         $post = new BlogPost();
 
