@@ -19,7 +19,7 @@ class CreateProfilesTable extends Migration
 
             // $table->unsignedBigInteger('author_id')->index();
             // $table->foreign('author_id')->references('id')->on('authors');
-            $table->foreignId('author_id')->constrained('authors');
+            $table->foreignId('author_id')->unique()->constrained('authors');
         });
     }
 
