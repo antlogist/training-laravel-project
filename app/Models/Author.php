@@ -9,7 +9,7 @@ class Author extends Model
 {
     use HasFactory;
 
-    public function porofile() {
+    public function profile() {
         return $this->hasOne(Profile::class);
     }
 }
