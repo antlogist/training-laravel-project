@@ -96,3 +96,7 @@ Route::resource('/posts', PostsController::class);
 //         return response()->download(public_path('test.jpg'), 'railroad.jpg');
 //     })->name('download');
 // });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
