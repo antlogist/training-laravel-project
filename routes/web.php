@@ -30,6 +30,11 @@ use App\Http\Controllers\PostsController;
 
 Route::get('/', [HomeController::class, 'home'])
     ->name('home.index');
+
+Route::get('/test', function() {
+	return '<h1>Test route!</h1>';
+})->name('test');
+
 Route::get('/contact', [HomeController::class, 'contact'])
     ->name('home.contact');
 
